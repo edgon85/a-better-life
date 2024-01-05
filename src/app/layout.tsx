@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { inter } from "../config/fonts";
+import { titleFont } from "../config/fonts";
 
 export const metadata: Metadata = {
   title: "A better life - dashboard",
@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={titleFont.className}>{children}</body>
     </html>
   );
 }
