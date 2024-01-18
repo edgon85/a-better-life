@@ -9,3 +9,103 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Gender {
+  men
+  women
+  kid
+}
+
+enum MaritalStatus {
+  single
+  married
+}
+
+model Patient {
+  id        String        @id @default(uuid())
+  code      Int           @unique
+  name      String
+  lastName  String
+  gender    Gender
+  birthDate DateTime
+  dpi       String?
+  phone     String
+  address   String
+  comunnity String
+  image     String        @default("")
+  state     MaritalStatus
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  MedicalRecord MedicalRecord[]
+  Appointment   Appointment[]
+  ClinicPatient ClinicPatient[]
+
+  @@index([gender])
+}
+
+model Doctor {
+  id           String        @id @default(uuid())
+  name         String
+  lastName     String
+  specialty    String
+  phone        String
+  email        String
+  Appointments Appointment[]
+}
+
+// Definición del modelo Historia Clínica
+model MedicalRecord {
+  id                     String   @id @default(uuid())
+  id_patient             String
+  conditions             String
+  allergies              String
+  dateOfLastMenstruation DateTime
+  dateOfAdmission        DateTime
+  description            String
+  treatment              String
+  blood                  Float    @default(0)
+  pressure               Float    @default(0)
+  temperature            Float    @default(0)
+  weight                 Float    @default(0)
+  cardiacFrecuency       Float    @default(0)
+  oxygen                 Float    @default(0)
+
+  patient   Patient @relation(fields: [patientId], references: [id])
+  patientId String
+}
+
+// Definición del modelo Cita
+model Appointment {
+  id          String   @id @default(uuid())
+  dateAndTime DateTime
+  reason      String
+
+  patient   Patient @relation(fields: [patientId], references: [id])
+  patientId String
+
+  Doctor   Doctor @relation(fields: [doctorId], references: [id])
+  doctorId String
+}
+
+model Clinic {
+  id      Int    @id @default(autoincrement())
+  Name    String
+  address String
+
+  Patients ClinicPatient[]
+}
+
+model ClinicPatient {
+  id               Int      @id @default(autoincrement())
+  registrationDate DateTime
+
+  patient   Patient @relation(fields: [patientId], references: [id])
+  patientId String
+
+  clinic   Clinic @relation(fields: [clinicId], references: [id])
+  clinicId Int
+
+  @@unique([patientId, clinicId])
+}
