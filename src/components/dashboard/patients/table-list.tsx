@@ -37,7 +37,7 @@ export const TablePatients = ({ patients }: Props) => {
                     <p>{formatDateToLocal(`${patient.birthDate}`)}</p>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <Link href={`/dashboard/patient/${patient.id}/detail`}>
+                    <Link href={`/dashboard/patients/${patient.id}/detail`}>
                       Ver detalles
                     </Link>
                   </div>
