@@ -4,6 +4,8 @@
 /postgres/
 
 /prisma/migrations
+/vscode/
+.vscode
 
 # dependencies
 /node_modules
