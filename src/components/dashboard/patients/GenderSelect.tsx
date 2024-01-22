@@ -1,4 +1,11 @@
-export const GenderSelect = () => {
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { FormInputs } from './create-form';
+
+type Props = {
+  register: UseFormRegister<FormInputs>;
+  errors: FieldErrors<FormInputs>;
+};
+export const GenderSelect = ({ register, errors }: Props) => {
   return (
     <fieldset className="mb-2 flex-1">
       <legend className="mb-2 block text-sm font-medium">Genero</legend>
@@ -7,11 +14,11 @@ export const GenderSelect = () => {
           <div className="flex items-center">
             <input
               id="men"
-              name="status"
               type="radio"
               value="men"
               aria-describedby="customer-error"
               className="h-4 w-4 border-gray-300 bg-gray-100 text-gray-600 focus:ring-2 focus:ring-gray-500 "
+              {...register('gender', { required: 'Este campo es requerido' })}
             />
             <label
               htmlFor="men"
@@ -23,11 +30,11 @@ export const GenderSelect = () => {
           <div className="flex items-center">
             <input
               id="women"
-              name="status"
               type="radio"
               value="women"
               aria-describedby="customer-error"
               className="h-4 w-4 border-gray-300 bg-gray-100 text-gray-600 focus:ring-2 focus:ring-gray-500 "
+              {...register('gender', { required: 'Este campo es requerido' })}
             />
             <label
               htmlFor="women"
@@ -38,6 +45,9 @@ export const GenderSelect = () => {
           </div>
         </div>
       </div>
+      {errors.gender && (
+        <span className="text-xs text-red-500">*{errors.gender?.message}</span>
+      )}
     </fieldset>
   );
 };

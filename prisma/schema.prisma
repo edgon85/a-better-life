@@ -23,15 +23,14 @@ enum MaritalStatus {
 
 model Patient {
   id        String        @id @default(uuid())
-  code      Int           @unique
   name      String
   lastName  String
   gender    Gender
   birthDate DateTime
   dpi       String?
   phone     String
-  address   String
-  comunnity String
+  address   String?
+  community String
   image     String        @default("")
   state     MaritalStatus
 
