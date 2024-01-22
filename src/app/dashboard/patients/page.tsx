@@ -1,8 +1,12 @@
-import { Search } from '@/components';
+import { getPaginatedPatients } from '@/actions';
+import { Search, TablePatients } from '@/components';
+import { IPatient } from '@/interfaces';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-export default function PatientPage() {
+export default async function PatientPage() {
+  const patients = await getPaginatedPatients() as IPatient[];
+
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -18,6 +22,7 @@ export default function PatientPage() {
           <PlusIcon className="h-5 md:ml-4" />
         </Link>
       </div>
+      <TablePatients patients={patients}/>
       {/* <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />
       </Suspense>

@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { Gender, MaritalStatus, Patient } from '@prisma/client';
 import { z } from 'zod';
 import prisma from '../../lib/prisma';
@@ -45,6 +46,7 @@ export const createPatient = async (formData: FormData) => {
       };
     });
 
+    revalidatePath('/admin/products');
     return {
       ok: true,
       data: prismaTx.patient,

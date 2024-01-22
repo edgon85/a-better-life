@@ -51,8 +51,6 @@ export const CreateForm = () => {
     formData.append('community', patientToSave.community);
     formData.append('state', patientToSave.state);
 
-    const { ok } = await createPatient(formData);
-
     Swal.fire({
       title: '¿Estás seguro?',
       html: `Se va a crear un nuevo paciente`,
