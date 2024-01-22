@@ -5,7 +5,7 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 export default async function PatientPage() {
-  const patients = await getPaginatedPatients() as IPatient[];
+  const patients = (await getPaginatedPatients()) as IPatient[];
 
   return (
     <div className="w-full">
@@ -22,13 +22,7 @@ export default async function PatientPage() {
           <PlusIcon className="h-5 md:ml-4" />
         </Link>
       </div>
-      <TablePatients patients={patients}/>
-      {/* <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
-      </Suspense>
-      <div className="mt-5 flex w-full justify-center">
-        <Pagination totalPages={totalPages} />
-      </div> */}
+      <TablePatients patients={patients} />
     </div>
   );
 }

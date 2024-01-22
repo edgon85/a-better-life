@@ -1,11 +1,16 @@
+import { getPatientById } from '@/actions';
+import { IPatient } from '@/interfaces';
+import { formatDateToLocal, translateGender, translateMarital } from '@/utils';
 import { ArrowRightCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-export default function PatientDetailPage({
+export default async function PatientDetailPage({
   params: { id },
 }: {
   params: { id: string };
 }) {
+  const patient = (await getPatientById(id)) as IPatient;
+
   return (
     <>
       <div className="py-2 px-2 bg-gray-200 w-full">
@@ -21,12 +26,22 @@ export default function PatientDetailPage({
           <p className="p-2 bg-gray-200">Fecha de nacimiento</p>
         </div>
         <div className="w-full">
-          <p className="p-2 w-full bg-gray-100">Edwin</p>
-          <p className="p-2 w-full ">San Francisco</p>
-          <p className="p-2 w-full bg-gray-100">54587458</p>
-          <p className="p-2 w-full bg-gray">Maculino</p>
-          <p className="p-2 w-full bg-gray-100">Soltero</p>
-          <p className="p-2 w-full bg-gray">12 jun 4587</p>
+          <p className="p-2 w-full bg-gray-100">
+            {patient.name} {patient.lastName}
+          </p>
+          <p className="p-2 w-full ">
+            {patient.address} {patient.community}
+          </p>
+          <p className="p-2 w-full bg-gray-100">{patient.phone}</p>
+          <p className="p-2 w-full bg-gray">
+            {translateGender(patient.gender)}
+          </p>
+          <p className="p-2 w-full bg-gray-100">
+            {translateMarital(`${patient.state}`)}
+          </p>
+          <p className="p-2 w-full bg-gray">
+            {formatDateToLocal(`${patient.birthDate}`)}
+          </p>
         </div>
       </div>
 
@@ -103,7 +118,7 @@ export default function PatientDetailPage({
                       </td>
                       <td className="whitespace-nowrap py-3 pl-6 pr-3">
                         <div className="flex justify-end gap-3">
-                          <ArrowRightCircleIcon className="w-8"/>
+                          <ArrowRightCircleIcon className="w-8" />
                         </div>
                       </td>
                     </tr>
